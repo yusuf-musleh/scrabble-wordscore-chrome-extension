@@ -1,0 +1,39 @@
+{
+  "manifest_version": 2,
+
+  "name": "Word Scorer, Nitrio Edition",
+  "description": "This extension determines the score of selected word in the game Scrabble",
+  "version": "1.0",
+
+  "browser_action": {
+    "default_icon": "icon.png"
+  },
+
+  "content_scripts": [
+    {
+      "matches": ["<all_urls>"],
+      "css": ["css/style.css"],
+      "js": ["js/jquery-3.1.1.min.js", "js/notify.min.js", "js/score_word.js"]
+    }
+  ],
+
+  "permissions": [
+    "tabs",
+    "activeTab",
+    "contextMenus",
+    "http://*/",
+    "https://*/"
+  ],
+
+  "icons": {
+    "16": "icon16.png",
+    "19": "icon.png",
+    "48": "icon48.png",
+    "128": "icon128.png"
+  },
+
+  "background": {
+    "scripts": ["js/jquery-3.1.1.min.js", "js/background.js"]
+  }
+
+}
