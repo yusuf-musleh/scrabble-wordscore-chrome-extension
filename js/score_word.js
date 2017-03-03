@@ -22,6 +22,9 @@ function show_results(data, counter) {
 	if (data.valid) {
 		result_data = 'Word: '+ data.word +'<br/> Score: ' + data.score;
 	}
+	else if (data.statusText == 'error') {
+		var result_data = 'Please make sure the scrabble_api_server is running!';
+	}
 
 	var html_to_inject =  	"<div style='color: white; text-align: center; font-family: \"Arial\", Helvetica, sans-serif;'>" +
 							    "<div>" +
