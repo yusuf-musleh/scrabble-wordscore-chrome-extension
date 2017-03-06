@@ -6,7 +6,7 @@ function show_results(data, counter) {
 	$.notify.addStyle('result', {
   		html:
   			// using iframe to prevent css spilling from page
-  			"<iframe id='notification_iframe" + counter + "'></iframe>"
+  			"<iframe id='notification_iframe" + counter + "' style='z-index: 99999999999'></iframe>"
 	});
 
 	$.notify({
@@ -14,8 +14,9 @@ function show_results(data, counter) {
 		  	result_data: 'Word: '+ data.word +'<br/> Score: ' + data.score
 		}, {
 		  	style: 'result',
-		  	autoHideDelay: 5000
-
+		  	autoHideDelay: 5000,
+		  	position: "top right"
+		  	// autoHide: false
 		});
 
 	var result_data = 'Sorry, this word is not valid :(';
@@ -43,6 +44,7 @@ function show_results(data, counter) {
 	iframe.document.write(html_to_inject);
 	iframe.document.close();
 
+
 }
 
 // counter for unique iframe id
@@ -53,5 +55,6 @@ chrome.extension.onMessage.addListener(function(msg, sender, sendResponse) {
 	show_results(msg, counter);
 
 });
+
 
 
