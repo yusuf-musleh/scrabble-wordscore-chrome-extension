@@ -15,7 +15,7 @@ function show_results(data, counter) {
 		}, {
 		  	style: 'result',
 		  	autoHideDelay: 5000,
-		  	position: "top right"
+		  	position: "top right",
 		  	// autoHide: false
 		});
 
@@ -27,7 +27,7 @@ function show_results(data, counter) {
 		var result_data = 'Please make sure the scrabble_api_server is running!';
 	}
 
-	var html_to_inject =  	"<div style='color: white; text-align: center; font-family: \"Arial\", Helvetica, sans-serif;'>" +
+	var html_to_inject =  	"<div style='color: white; text-align: center; font-family: \"Arial\", Helvetica, sans-serif;' >" +
 							    "<div>" +
 							    	"<div class='result_title' data-notify-html='result_title'>Word Scorer - Nitrio Edition</div>" +
 							    	"<hr>" +
@@ -44,7 +44,6 @@ function show_results(data, counter) {
 	iframe.document.write(html_to_inject);
 	iframe.document.close();
 
-
 }
 
 // counter for unique iframe id
@@ -55,6 +54,7 @@ chrome.extension.onMessage.addListener(function(msg, sender, sendResponse) {
 	show_results(msg, counter);
 
 });
+
 
 
 

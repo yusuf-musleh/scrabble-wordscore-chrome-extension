@@ -43,7 +43,7 @@ chrome.contextMenus.create({
 chrome.manifest = chrome.app.getDetails();
 
 var injectIntoTab = function (tab) {
-    // iterate through the content scripts
+    // iterate through the js files in content scripts
     var scripts = chrome.manifest.content_scripts[0].js;
     var s = scripts.length;
     for(var i = 0; i < s; i++) {
@@ -51,6 +51,16 @@ var injectIntoTab = function (tab) {
             file: scripts[i]
         });
     }
+
+    // iterate though css files in content scripts
+    var csses = chrome.manifest.content_scripts[0].css;
+    s = csses.length;
+    for (var i = 0; i < s; i++) {
+        chrome.tabs.insertCSS(tab.id, {
+            file: csses[i]
+        });
+    }
+
 }
 
 // Get all windows and loop over all tabs to inject script to
