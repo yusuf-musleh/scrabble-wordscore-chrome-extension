@@ -1,23 +1,12 @@
 
+
+function shift_iframes_down() {
+	$("iframe[id*='notification_iframe']").animate({'top': "+=110px"}, { duration: 500, queue: false });
+}
+
+
 // display notification box on top right corner
 function show_results(data, counter) {
-
-	// source: https://notifyjs.com/
-	$.notify.addStyle('result', {
-  		html:
-  			// using iframe to prevent css spilling from page
-  			"<iframe id='notification_iframe" + counter + "' style='z-index: 99999999999'></iframe>"
-	});
-
-	$.notify({
-	  		result_title: 'Word Scorer - Nitrio Edition',
-		  	result_data: 'Word: '+ data.word +'<br/> Score: ' + data.score
-		}, {
-		  	style: 'result',
-		  	autoHideDelay: 5000,
-		  	position: "top right",
-		  	// autoHide: false
-		});
 
 	var result_data = 'Sorry, this word is not valid :(';
 	if (data.valid) {
@@ -27,22 +16,27 @@ function show_results(data, counter) {
 		var result_data = 'Please make sure the scrabble_api_server is running!';
 	}
 
-	var html_to_inject =  	"<div style='color: white; text-align: center; font-family: \"Arial\", Helvetica, sans-serif;' >" +
-							    "<div>" +
-							    	"<div class='result_title' data-notify-html='result_title'>Word Scorer - Nitrio Edition</div>" +
-							    	"<hr>" +
-							    	"<div class='result_data' data-notify-html='result_data'>" + result_data + "</div>" +
-							    "</div>" +
-							"</div>";
+	shift_iframes_down();
 
+	var html_to_inject = "<div style='background-color: #1b98dd; color: white; text-align: center; font-family: \"Arial\", Helvetica, sans-serif;'><div>Word Scorer - Nitrio Edition</div><hr><div>" + result_data + "</div></div>";
 
-	// injecting data results into iframe
-	var iframe = document.getElementById("notification_iframe" + counter);
+	var iframe = document.createElement("iframe");
+	iframe.setAttribute("id", "notification_iframe" + counter);
+	iframe.setAttribute("style", "border:none; width:250px; height:100px; position: fixed; top: 0; right:0; z-index: 99999999999; background-color: #1b98dd");
+	iframe.setAttribute("frameborder", "0");
+
+	document.body.appendChild(iframe);
+
+	var iframe_div = document.getElementById("notification_iframe" + counter);
 	iframe = iframe.contentWindow || ( iframe.contentDocument.document || iframe.contentDocument);
-
 	iframe.document.open();
 	iframe.document.write(html_to_inject);
 	iframe.document.close();
+
+	$("#notification_iframe" + counter).delay(5000).slideUp(300, function(){
+		$("#notification_iframe" + counter).remove();
+	});
+
 
 }
 
@@ -54,7 +48,5 @@ chrome.extension.onMessage.addListener(function(msg, sender, sendResponse) {
 	show_results(msg, counter);
 
 });
-
-
 
 
